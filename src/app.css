@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "SpaceMono";
+  src: url("/fonts/SpaceMono-Bold.ttf") format("truetype");
+}
+
+@layer base {
+  html {
+    font-family: "SpaceMono", monospace;
+  }
+}
