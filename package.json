@@ -22,5 +22,9 @@
     "typescript": "^5.2.2",
     "vite": "^5.3.4",
     "vitest": "^2.0.4"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^2.4.0"
   }
 }
