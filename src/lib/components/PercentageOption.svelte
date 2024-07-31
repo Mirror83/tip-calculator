@@ -1,12 +1,12 @@
 <script lang="ts">
   import { cn } from "../utils/cn";
 
-  export let selected = false;
-  export let value;
-  export let text;
+  export let selected: boolean = false;
+  export let text: string;
 </script>
 
 <button
+  on:click
   class={cn(
     "py-4 rounded-md",
     selected
