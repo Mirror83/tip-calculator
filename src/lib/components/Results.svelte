@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import {
     calculateTipPerPerson,
     calculateTotalPerPerson,
@@ -6,16 +6,14 @@
   } from "../utils/calculate-tip";
   import ResultRow from "./ResultRow.svelte";
 
-  export let bill;
-  export let noOfPeople;
-  export let selectedOption;
+  export let bill: number;
+  export let noOfPeople: number;
+  export let tipPercentage: number;
 
-  let tipPerPerson = calculateTipPerPerson(bill, selectedOption, noOfPeople);
-  let totalPerPerson = calculateTotalPerPerson(
-    bill,
-    selectedOption,
-    noOfPeople
-  );
+  console.log(bill, tipPercentage, noOfPeople);
+
+  let tipPerPerson = calculateTipPerPerson(bill, tipPercentage, noOfPeople);
+  let totalPerPerson = calculateTotalPerPerson(bill, tipPercentage, noOfPeople);
 </script>
 
 <div class="bg-very-dark-cyan p-4 mt-8 rounded-xl">
