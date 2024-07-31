@@ -20,12 +20,20 @@ export function calculateTotalPerPerson(
   return amount / people + calculateTipPerPerson(amount, tipPercent, people);
 }
 
-export function truncate(tip: number, places: number = 2): number {
-  console.log(`Original tip: ${tip}`);
+function truncate(tip: number, places: number = 2): number {
   const rounded = tip.toFixed(places + 1);
-  console.log(`Rounded: ${rounded}`);
-
   const truncated = rounded.slice(0, rounded.length - 1);
 
   return Number(truncated);
+}
+
+export function formatCost(tip: number) {
+  const formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    currencySign: "standard",
+    roundingMode: "trunc",
+  });
+
+  return formatter.format(truncate(tip));
 }
