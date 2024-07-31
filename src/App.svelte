@@ -5,14 +5,49 @@
 
   import Input from "./lib/components/Input.svelte";
   import PercentageOption from "./lib/components/PercentageOption.svelte";
-  import Results from "./lib/components/Results.svelte";
+
+  import {
+    calculateTipPerPerson,
+    calculateTotalPerPerson,
+    formatCost,
+  } from "./lib/utils/calculate-tip";
+  import ResultRow from "./lib/components/ResultRow.svelte";
 
   const tipOptions = [0.05, 0.1, 0.15, 0.25, 0.5];
 
   let selectedOption = 0;
-  let bill = 0;
-  let noOfPeople = 1;
   let customPercentage = "";
+
+  $: tipPercentage =
+    selectedOption == -1
+      ? Number(customPercentage) / 100
+      : tipOptions[selectedOption];
+
+  let noOfPeople = "1";
+  $: numericNoOfPeople = noOfPeople === "" ? 1 : Number(noOfPeople);
+
+  let bill = "";
+  $: numericBill = bill ? Number(bill) : 0;
+
+  $: tipPerPerson = calculateTipPerPerson(
+    numericBill,
+    tipPercentage,
+    numericNoOfPeople
+  );
+  $: totalPerPerson = calculateTotalPerPerson(
+    numericBill,
+    tipPercentage,
+    numericNoOfPeople
+  );
+
+  function reset() {
+    bill = "";
+    selectedOption = 0;
+    customPercentage = "";
+    noOfPeople = "";
+  }
+
+  // $: console.log(`Numeric bill: ${numericBill}`);
 </script>
 
 <main class="bg-light-cyan">
@@ -21,7 +56,7 @@
   </div>
 
   <div class="bg-white rounded-t-3xl p-8">
-    <Input labelText="Bill" iconPath={iconDollar} />
+    <Input bind:value={bill} labelText="Bill" iconPath={iconDollar} />
 
     <div class="flex flex-col gap-4 my-8">
       <label for="tip-percentage">Select Tip %</label>
@@ -52,8 +87,25 @@
       </div>
     </div>
 
-    <Input labelText="Number of people" iconPath={iconPerson} />
+    <Input
+      bind:value={noOfPeople}
+      labelText="Number of people"
+      iconPath={iconPerson}
+    />
 
-    <Results {bill} {selectedOption} {noOfPeople} />
+    <!-- <Results
+      bill={numericBill}
+      {tipPercentage}
+      noOfPeople={numericNoOfPeople}
+    /> -->
+    <div class="bg-very-dark-cyan p-4 mt-8 rounded-xl">
+      <ResultRow title={"Tip Amount"} cost={formatCost(tipPerPerson)} />
+      <ResultRow title={"Total"} cost={formatCost(totalPerPerson)} />
+      <button
+        on:click={reset}
+        class="w-full bg-strong-cyan text-very-dark-cyan rounded-md py-2 text-2xl"
+        >RESET</button
+      >
+    </div>
   </div>
 </main>
