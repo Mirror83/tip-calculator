@@ -3,7 +3,7 @@
   export let cost;
 </script>
 
-<div class="flex justify-between items-center my-8">
+<div class="flex justify-between items-center mb-8">
   <div class="flex flex-col">
     <span class="text-white">{title}</span>
     <span class="text-grayish-cyan text-sm">/ person</span>
