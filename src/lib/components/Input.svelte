@@ -1,6 +1,7 @@
 <script lang="ts">
   export let value: string;
   export let labelText: string;
+  export let placeholder: string;
   export let iconPath: string;
 </script>
 
@@ -12,7 +13,7 @@
     bind:value
     id={labelText}
     type="text"
-    placeholder="100.00"
+    {placeholder}
     class="w-full relative appearance-none outline-none bg-very-light-cyan
        focus:outline-strong-cyan rounded-md text-2xl text-end p-2"
   />

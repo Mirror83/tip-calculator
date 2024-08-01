@@ -23,7 +23,7 @@
       ? Number(customPercentage) / 100
       : tipOptions[selectedOption];
 
-  let noOfPeople = "1";
+  let noOfPeople = "";
   $: numericNoOfPeople = noOfPeople === "" ? 1 : Number(noOfPeople);
 
   let bill = "";
@@ -61,7 +61,12 @@
     class="bg-white rounded-t-3xl lg:rounded-3xl p-8 lg:w-10/12 md:grid md:grid-cols-2 md:gap-8"
   >
     <div>
-      <Input bind:value={bill} labelText="Bill" iconPath={iconDollar} />
+      <Input
+        bind:value={bill}
+        labelText="Bill"
+        iconPath={iconDollar}
+        placeholder="100.50"
+      />
 
       <div class="flex flex-col gap-4 my-8">
         <label for="tip-percentage">Select Tip %</label>
@@ -96,6 +101,7 @@
         bind:value={noOfPeople}
         labelText="Number of people"
         iconPath={iconPerson}
+        placeholder="5"
       />
     </div>
 
