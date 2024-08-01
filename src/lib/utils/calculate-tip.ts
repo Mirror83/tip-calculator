@@ -6,8 +6,8 @@ export function calculateTipPerPerson(
   if (tipPercent < 0 || tipPercent > 1) {
     throw new Error("Percentage must be between 0 and 1");
   }
-  if (people < 1 || !Number.isInteger(people)) {
-    throw new Error("People must be a positive integer.");
+  if (people < 0 || !Number.isInteger(people)) {
+    throw new Error("people cannot be negative");
   }
   return (amount * tipPercent) / people;
 }
