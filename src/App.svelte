@@ -114,7 +114,7 @@
 
       <button
         on:click={reset}
-        class="w-full bg-strong-cyan text-very-dark-cyan rounded-md py-2 text-2xl"
+        class="w-full bg-strong-cyan hover:bg-light-cyan text-very-dark-cyan rounded-md py-2 text-2xl"
         >RESET</button
       >
     </div>
