@@ -16,38 +16,27 @@
   const tipOptions = [0.05, 0.1, 0.15, 0.25, 0.5];
 
   let selectedOption = 0;
-  let customPercentage = "";
+  let customPercentage = 0;
 
   $: tipPercentage =
     selectedOption == -1
       ? Number(customPercentage) / 100
       : tipOptions[selectedOption];
 
-  let noOfPeople = "";
-  $: numericNoOfPeople = noOfPeople === "" ? 1 : Number(noOfPeople);
+  let noOfPeople = 1;
 
-  let bill = "";
-  $: numericBill = bill ? Number(bill) : 0;
+  let bill = 0;
+  $: console.log(bill);
 
-  $: tipPerPerson = calculateTipPerPerson(
-    numericBill,
-    tipPercentage,
-    numericNoOfPeople
-  );
-  $: totalPerPerson = calculateTotalPerPerson(
-    numericBill,
-    tipPercentage,
-    numericNoOfPeople
-  );
+  $: tipPerPerson = calculateTipPerPerson(bill, tipPercentage, noOfPeople);
+  $: totalPerPerson = calculateTotalPerPerson(bill, tipPercentage, noOfPeople);
 
   function reset() {
-    bill = "";
+    bill = 0;
     selectedOption = 0;
-    customPercentage = "";
-    noOfPeople = "";
+    customPercentage = 0;
+    noOfPeople = 0;
   }
-
-  // $: console.log(`Numeric bill: ${numericBill}`);
 </script>
 
 <main
@@ -65,7 +54,9 @@
         bind:value={bill}
         labelText="Bill"
         iconPath={iconDollar}
-        placeholder="100.50"
+        placeholder={100.5}
+        min={0}
+        max={10_000}
       />
 
       <div class="flex flex-col gap-4 my-8">
@@ -77,7 +68,7 @@
               selected={i == selectedOption}
               on:click={() => {
                 selectedOption = i;
-                customPercentage = "";
+                customPercentage = 0;
               }}
             />
           {/each}
@@ -101,7 +92,9 @@
         bind:value={noOfPeople}
         labelText="Number of people"
         iconPath={iconPerson}
-        placeholder="5"
+        placeholder={1}
+        min={1}
+        max={20}
       />
     </div>
 
