@@ -50,57 +50,68 @@
   // $: console.log(`Numeric bill: ${numericBill}`);
 </script>
 
-<main class="bg-light-cyan">
+<main
+  class="bg-light-cyan lg:flex lg:flex-col lg:items-center lg:justify-center lg:min-h-screen lg:py-8"
+>
   <div class="flex justify-center items-center h-[150px] bg-light-cyan">
     <img src={splitterLogo} class="h-[60px]" alt="Splitter logo" />
   </div>
 
-  <div class="bg-white rounded-t-3xl p-8">
-    <Input bind:value={bill} labelText="Bill" iconPath={iconDollar} />
+  <div
+    class="bg-white rounded-t-3xl lg:rounded-3xl p-8 lg:w-10/12 md:grid md:grid-cols-2 md:gap-8"
+  >
+    <div>
+      <Input bind:value={bill} labelText="Bill" iconPath={iconDollar} />
 
-    <div class="flex flex-col gap-4 my-8">
-      <label for="tip-percentage">Select Tip %</label>
-      <div class="grid grid-cols-2 gap-4 text-2xl">
-        {#each tipOptions as tipOption, i (tipOption)}
-          <PercentageOption
-            text={tipOption * 100 + "%"}
-            selected={i == selectedOption}
-            on:click={() => {
-              selectedOption = i;
-              customPercentage = "";
-            }}
-          />
-        {/each}
-        <input
-          on:focus={() => (selectedOption = -1)}
-          bind:value={customPercentage}
-          type="number"
-          step="5"
-          min="0"
-          max="100"
-          placeholder="Custom"
-          name="custom-tip"
-          id="custom-tip"
-          class="text-2xl text-center rounded-md bg-very-light-cyan
+      <div class="flex flex-col gap-4 my-8">
+        <label for="tip-percentage">Select Tip %</label>
+        <div class="grid grid-cols-2 lg:grid-cols-3 gap-4 text-2xl">
+          {#each tipOptions as tipOption, i (tipOption)}
+            <PercentageOption
+              text={tipOption * 100 + "%"}
+              selected={i == selectedOption}
+              on:click={() => {
+                selectedOption = i;
+                customPercentage = "";
+              }}
+            />
+          {/each}
+          <input
+            on:focus={() => (selectedOption = -1)}
+            bind:value={customPercentage}
+            type="number"
+            step="5"
+            min="0"
+            max="100"
+            placeholder="Custom"
+            name="custom-tip"
+            id="custom-tip"
+            class="text-2xl text-center rounded-md bg-very-light-cyan
           outline-none focus:outline-strong-cyan px-2"
-        />
+          />
+        </div>
       </div>
-    </div>
 
-    <Input
-      bind:value={noOfPeople}
-      labelText="Number of people"
-      iconPath={iconPerson}
-    />
+      <Input
+        bind:value={noOfPeople}
+        labelText="Number of people"
+        iconPath={iconPerson}
+      />
+    </div>
 
     <!-- <Results
       bill={numericBill}
       {tipPercentage}
       noOfPeople={numericNoOfPeople}
     /> -->
-    <div class="bg-very-dark-cyan p-4 mt-8 rounded-xl">
-      <ResultRow title={"Tip Amount"} cost={formatCost(tipPerPerson)} />
-      <ResultRow title={"Total"} cost={formatCost(totalPerPerson)} />
+    <div
+      class="bg-very-dark-cyan p-4 py-8 md:p-8 mt-8 md:mt-0 rounded-xl md:flex md:flex-col md:justify-between"
+    >
+      <div>
+        <ResultRow title={"Tip Amount"} cost={formatCost(tipPerPerson)} />
+        <ResultRow title={"Total"} cost={formatCost(totalPerPerson)} />
+      </div>
+
       <button
         on:click={reset}
         class="w-full bg-strong-cyan text-very-dark-cyan rounded-md py-2 text-2xl"
