@@ -3,12 +3,16 @@ export function calculateTipPerPerson(
   tipPercent: number,
   people: number
 ): number {
+  if (amount < 0) {
+    throw new Error("amount cannot be negative.");
+  }
   if (tipPercent < 0 || tipPercent > 1) {
-    throw new Error("Percentage must be between 0 and 1");
+    throw new Error("tipPercent must be between 0 and 1");
   }
-  if (people < 0 || !Number.isInteger(people)) {
-    throw new Error("people cannot be negative");
+  if (people < 1 || !Number.isInteger(people)) {
+    throw new Error("people must be a positive integer");
   }
+
   return (amount * tipPercent) / people;
 }
 
@@ -17,7 +21,7 @@ export function calculateTotalPerPerson(
   tipPercent: number,
   people: number
 ): number {
-  return amount / people + calculateTipPerPerson(amount, tipPercent, people);
+  return calculateTipPerPerson(amount, tipPercent, people) + amount / people;
 }
 
 function truncate(tip: number, places: number = 2): number {
@@ -27,7 +31,7 @@ function truncate(tip: number, places: number = 2): number {
   return Number(truncated);
 }
 
-export function formatCost(tip: number) {
+export function formatCost(cost: number) {
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
@@ -35,5 +39,5 @@ export function formatCost(tip: number) {
     roundingMode: "trunc",
   });
 
-  return formatter.format(truncate(tip));
+  return formatter.format(truncate(cost));
 }
