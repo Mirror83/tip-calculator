@@ -180,6 +180,7 @@
           <input
             on:input={handlePeopleInput}
             id="People"
+            name="People"
             type="number"
             min="1"
             max="20"
