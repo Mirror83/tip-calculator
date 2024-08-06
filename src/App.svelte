@@ -11,11 +11,13 @@
     formatCost,
   } from "./lib/utils/calculate-tip";
   import ResultRow from "./lib/components/ResultRow.svelte";
+  import { cn } from "./lib/utils/cn";
 
   const tipOptions = [0.05, 0.1, 0.15, 0.25, 0.5];
 
   let selectedOption = 0;
   let customPercentage = 0;
+  let customPercentageError = "";
 
   $: tipPercentage = getTipPercentage(customPercentage);
 
@@ -24,7 +26,6 @@
 
   let bill = 0;
   let billError = "";
-  $: console.log(bill);
 
   $: tipPerPerson = calculateTipPerPerson(bill, tipPercentage, noOfPeople);
   $: totalPerPerson = calculateTotalPerPerson(bill, tipPercentage, noOfPeople);
@@ -46,51 +47,65 @@
         : Number(percentage) / 100;
   }
 
-  function handleBillInput(
-    event: Event & {
-      currentTarget: EventTarget &
-        HTMLInputElement & {
-          validity: ValidityState;
-        };
-    }
-  ) {
-    const value = event.currentTarget.value;
-    const validity = event.currentTarget.validity;
+  type InputEvent = Event & {
+    currentTarget: EventTarget &
+      HTMLInputElement & {
+        validity: ValidityState;
+      };
+  };
 
-    if (event.currentTarget.checkValidity()) {
-      billError = "";
-      bill = Number(value);
+  function handleBillInput(event: InputEvent) {
+    const input = event.currentTarget;
+    const value = input.value;
+    const numericValue = Number(value);
+
+    if (isNaN(Number(value))) {
+      billError = "Invalid number";
+    } else if (numericValue < 0) {
+      billError = "Can't be negative";
+    } else if (numericValue > 1_000_000) {
+      billError = "Can't be more than 1,000,000";
     } else {
-      if (validity.patternMismatch) {
-        if (!isNaN(Number(value))) {
-          if (Number(value) < 0) {
-            billError = "Amount cannot be negative";
-          } else if (value[0] != "." && value.split(".")[1].length > 2) {
-            billError = "Too many decimal places";
-          }
-        } else {
-          billError = "Input should be numeric";
-        }
-      } else {
-        billError = event.currentTarget.validationMessage;
-      }
-      bill = 0;
+      billError = "";
+      bill = numericValue;
+    }
+
+    if (billError != "") {
+      input.setCustomValidity(billError);
+    } else {
+      input.setCustomValidity("");
     }
   }
 
-  function handlePeopleInput(
-    event: Event & {
-      currentTarget: EventTarget &
-        HTMLInputElement & {
-          validity: ValidityState;
-        };
+  function handleCustomPercentageInput(event: InputEvent) {
+    const input = event.currentTarget;
+    const value = input.value;
+    const validity = input.validity;
+
+    if (input.checkValidity()) {
+      customPercentageError = "";
+      customPercentage = Number(value);
+    } else {
+      console.log(input.validationMessage);
+      if (validity.rangeOverflow) {
+        customPercentageError = "Maximium is 100%";
+      } else if (validity.rangeUnderflow) {
+        customPercentageError = "Cannot be less than 0";
+      } else if (validity.stepMismatch) {
+        customPercentageError = "Only whole numbers allowed";
+      } else if (validity.badInput) {
+        customPercentageError = "Must be a number";
+      }
     }
-  ) {
-    const value = event.currentTarget.value;
-    const validity = event.currentTarget.validity;
+  }
+
+  function handlePeopleInput(event: InputEvent) {
+    const input = event.currentTarget;
+    const value = input.value;
+    const validity = input.validity;
     console.log(validity);
 
-    if (event.currentTarget.checkValidity()) {
+    if (input.checkValidity()) {
       peopleError = "";
       noOfPeople = Number(value) == 0 ? 1 : Number(value);
     } else {
@@ -101,25 +116,25 @@
       } else if (validity.rangeOverflow) {
         peopleError = "Should be at most 20.";
       } else if (validity.stepMismatch) {
-        console.log(event.currentTarget.validationMessage);
         peopleError = "People cannot be fractional";
       } else {
-        peopleError = event.currentTarget.validationMessage;
+        peopleError = input.validationMessage;
       }
-      noOfPeople = 1;
     }
   }
 </script>
 
 <main
-  class="bg-light-cyan lg:flex lg:flex-col lg:items-center lg:justify-center lg:min-h-screen lg:py-8"
+  class="bg-light-cyan lg:flex lg:flex-col lg:items-center lg:justify-center lg:min-h-screen lg:py-8 lg:gap-8"
 >
-  <div class="flex justify-center items-center h-[150px] bg-light-cyan">
+  <div
+    class="flex justify-center items-center h-[150px] lg:h-auto bg-light-cyan"
+  >
     <img src={splitterLogo} class="h-[60px]" alt="Splitter logo" />
   </div>
 
   <div
-    class="bg-white rounded-t-3xl lg:rounded-3xl p-8 lg:w-10/12 md:grid md:grid-cols-2 md:gap-8"
+    class="bg-white rounded-t-3xl lg:rounded-3xl p-8 lg:w-9/12 md:grid md:grid-cols-2 md:gap-8"
   >
     <div>
       <div class="flex flex-col gap-4">
@@ -127,16 +142,16 @@
           <label for="Bill">Bill</label>
           <span class="text-red-400">{billError}</span>
         </div>
-        <div class="input-container">
+        <div class={cn("input-container", billError != "" && "border-red-400")}>
           <img src={iconDollar} alt="" role="presentation" class="h-6 w-6" />
           <input
             on:input={handleBillInput}
+            value={bill}
             id="Bill"
             type="text"
             inputmode="numeric"
-            pattern={`^[0-9]+[.]?[0-9]{0,2}$`}
             placeholder="100.00"
-            maxlength="10"
+            class="text-end"
           />
         </div>
       </div>
@@ -153,20 +168,28 @@
               }}
             />
           {/each}
-          <input
-            on:focus={() => (selectedOption = -1)}
-            bind:value={customPercentage}
-            type="number"
-            step="1"
-            min="0"
-            max="100"
-            maxlength="3"
-            placeholder="Custom"
-            name="custom-tip"
-            id="custom-tip"
-            class="text-2xl text-center rounded-md bg-very-light-cyan outline-none
-          focus:outline-strong-cyan px-2 focus:invalid:outline-red-400 invalid:outline-red-400"
-          />
+          <div>
+            <div class="flex flex-row-reverse justify-center mb-2">
+              <span class="text-red-400 text-xs text-center"
+                >{customPercentageError}</span
+              >
+            </div>
+            <div class="input-container">
+              <input
+                on:focus={() => (selectedOption = -1)}
+                on:input={handleCustomPercentageInput}
+                bind:value={customPercentage}
+                type="number"
+                min={0}
+                max={100}
+                inputmode="numeric"
+                placeholder="Custom"
+                name="custom-tip"
+                id="custom-tip"
+                class="text-center"
+              />
+            </div>
+          </div>
         </div>
       </div>
 
@@ -182,11 +205,11 @@
             id="People"
             name="People"
             type="number"
-            min="1"
-            max="20"
-            maxlength="2"
-            step="1"
+            min={1}
+            max={20}
             placeholder="1"
+            value={noOfPeople}
+            class="text-end"
           />
         </div>
       </div>
@@ -219,6 +242,19 @@
 
   .input-container > input {
     @apply w-full relative appearance-none outline-none bg-very-light-cyan
-    rounded-md text-2xl text-end p-2;
+    rounded-md text-2xl p-2;
+  }
+
+  /* Chrome, Safari, Edge, Opera */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
   }
 </style>
