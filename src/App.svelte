@@ -139,7 +139,7 @@
     <div>
       <div class="flex flex-col gap-4">
         <div class="flex flex-wrap gap-4 justify-between align-baseline">
-          <label for="Bill">Bill</label>
+          <label for="bill">Bill</label>
           <span class="text-red-400">{billError}</span>
         </div>
         <div class={cn("input-container", billError != "" && "border-red-400")}>
@@ -147,7 +147,7 @@
           <input
             on:input={handleBillInput}
             value={bill}
-            id="Bill"
+            id="bill"
             type="text"
             inputmode="numeric"
             placeholder="100.00"
@@ -157,7 +157,7 @@
       </div>
 
       <div class="flex flex-col gap-4 my-8">
-        <label for="tip-percentage">Select Tip %</label>
+        <span>Select Tip %</span>
         <div class="grid grid-cols-2 lg:grid-cols-3 gap-4 text-2xl">
           {#each tipOptions as tipOption, i (tipOption)}
             <PercentageOption
@@ -170,8 +170,10 @@
           {/each}
           <div>
             <div class="flex flex-row-reverse justify-center mb-2">
-              <span class="text-red-400 text-xs text-center"
-                >{customPercentageError}</span
+              <label
+                for="custom-tip-percentage"
+                class="text-red-400 text-xs text-center"
+                >{customPercentageError}</label
               >
             </div>
             <div class="input-container">
@@ -185,7 +187,7 @@
                 inputmode="numeric"
                 placeholder="Custom"
                 name="custom-tip"
-                id="custom-tip"
+                id="custom-tip-percentage"
                 class="text-center"
               />
             </div>
@@ -195,14 +197,14 @@
 
       <div class="flex flex-col gap-4">
         <div class="flex flex-wrap gap-4 justify-between align-baseline">
-          <label for="Peopke">People</label>
+          <label for="people">People</label>
           <span class="text-red-400">{peopleError}</span>
         </div>
         <div class="input-container">
           <img src={iconPerson} alt="" role="presentation" class="h-6 w-6" />
           <input
             on:input={handlePeopleInput}
-            id="People"
+            id="people"
             name="People"
             type="number"
             min={1}
