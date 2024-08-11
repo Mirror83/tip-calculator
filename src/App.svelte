@@ -139,7 +139,7 @@
     <div>
       <div class="flex flex-col gap-4">
         <div class="flex flex-wrap gap-4 justify-between align-baseline">
-          <label for="bill">Bill</label>
+          <label for="bill" class="text-dark-cyan">Bill</label>
           <span class="text-red-400">{billError}</span>
         </div>
         <div class={cn("input-container", billError != "" && "border-red-400")}>
@@ -157,7 +157,7 @@
       </div>
 
       <div class="flex flex-col gap-4 my-8">
-        <span>Select Tip %</span>
+        <span class="text-dark-cyan">Select Tip %</span>
         <div class="grid grid-cols-2 lg:grid-cols-3 gap-4 text-2xl">
           {#each tipOptions as tipOption, i (tipOption)}
             <PercentageOption
@@ -197,7 +197,7 @@
 
       <div class="flex flex-col gap-4">
         <div class="flex flex-wrap gap-4 justify-between align-baseline">
-          <label for="people">People</label>
+          <label for="people" class="text-dark-cyan">People</label>
           <span class="text-red-400">{peopleError}</span>
         </div>
         <div class="input-container">
