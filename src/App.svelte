@@ -134,7 +134,7 @@
   </div>
 
   <div
-    class="bg-white rounded-t-3xl lg:rounded-3xl p-8 lg:w-9/12 md:grid md:grid-cols-2 md:gap-8"
+    class="bg-white rounded-t-3xl lg:rounded-3xl p-8 lg:w-8/12 md:grid md:grid-cols-2 md:gap-8"
   >
     <div>
       <div class="flex flex-col gap-4">
