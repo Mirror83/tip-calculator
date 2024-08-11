@@ -130,7 +130,7 @@
   <div
     class="flex justify-center items-center h-[150px] lg:h-auto bg-light-cyan"
   >
-    <img src={splitterLogo} class="h-[60px]" alt="Splitter logo" />
+    <img src={splitterLogo} class="mb-8" alt="Splitter logo" />
   </div>
 
   <div
