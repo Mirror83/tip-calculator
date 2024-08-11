@@ -197,14 +197,16 @@
 
       <div class="flex flex-col gap-4">
         <div class="flex flex-wrap gap-4 justify-between align-baseline">
-          <label for="people" class="text-dark-cyan">People</label>
+          <label for="number-of-people" class="text-dark-cyan"
+            >Number of people</label
+          >
           <span class="text-red-400">{peopleError}</span>
         </div>
         <div class="input-container">
           <img src={iconPerson} alt="" role="presentation" class="h-6 w-6" />
           <input
             on:input={handlePeopleInput}
-            id="people"
+            id="number-of-people"
             name="People"
             type="number"
             min={1}
