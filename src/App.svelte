@@ -19,7 +19,7 @@
   let customPercentage = 0;
   let customPercentageError = "";
 
-  $: tipPercentage = getTipPercentage(customPercentage);
+  $: tipPercentage = getTipPercentage(selectedOption, customPercentage);
 
   let noOfPeople = 1;
   let peopleError = "";
@@ -37,8 +37,8 @@
     noOfPeople = 1;
   }
 
-  function getTipPercentage(percentage: number | null): number {
-    if (selectedOption != -1) return tipOptions[selectedOption] || 0;
+  function getTipPercentage(option: number, percentage: number | null): number {
+    if (option != -1) return tipOptions[selectedOption] || 0;
 
     return Number(percentage) > 100
       ? 1
