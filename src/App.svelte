@@ -15,30 +15,41 @@
 
   const tipOptions = [0.05, 0.1, 0.15, 0.25, 0.5];
 
-  let selectedOption = 0;
-  let customPercentage = 0;
+  let selectedOption: number | null = null;
+  let customPercentage: number | null = null;
   let customPercentageError = "";
 
-  $: tipPercentage = getTipPercentage(selectedOption, customPercentage);
+  $: tipPercentage = customPercentage
+    ? getTipPercentage(selectedOption, customPercentage)
+    : 0;
 
-  let noOfPeople = 1;
+  let noOfPeople: number | null = null;
   let peopleError = "";
 
-  let bill = 0;
+  let bill: number | null = null;
   let billError = "";
 
-  $: tipPerPerson = calculateTipPerPerson(bill, tipPercentage, noOfPeople);
-  $: totalPerPerson = calculateTotalPerPerson(bill, tipPercentage, noOfPeople);
+  $: tipPerPerson =
+    bill && noOfPeople
+      ? calculateTipPerPerson(bill, tipPercentage, noOfPeople)
+      : 0;
+  $: totalPerPerson =
+    bill && noOfPeople
+      ? calculateTotalPerPerson(bill, tipPercentage, noOfPeople)
+      : 0;
 
   function reset() {
-    bill = 0;
-    selectedOption = 0;
-    customPercentage = 0;
-    noOfPeople = 1;
+    bill = null;
+    selectedOption = null;
+    customPercentage = null;
+    noOfPeople = null;
   }
 
-  function getTipPercentage(option: number, percentage: number | null): number {
-    if (option != -1) return tipOptions[selectedOption] || 0;
+  function getTipPercentage(
+    option: number | null,
+    percentage: number | null
+  ): number {
+    if (option !== null) return tipOptions[option];
 
     return Number(percentage) > 100
       ? 1
@@ -178,7 +189,7 @@
             </div>
             <div class="input-container">
               <input
-                on:focus={() => (selectedOption = -1)}
+                on:focus={() => (selectedOption = null)}
                 on:input={handleCustomPercentageInput}
                 bind:value={customPercentage}
                 type="number"
@@ -230,7 +241,10 @@
 
       <button
         on:click={reset}
-        class="w-full bg-strong-cyan hover:bg-light-cyan text-very-dark-cyan rounded-md py-2 text-2xl"
+        disabled={bill === null ||
+          noOfPeople === null ||
+          selectedOption === null}
+        class="w-full bg-strong-cyan hover:bg-light-cyan text-very-dark-cyan rounded-md py-2 text-xl disabled:bg-dark-cyan"
         >RESET</button
       >
     </div>
