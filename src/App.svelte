@@ -143,7 +143,7 @@
           <span class="text-red-400">{billError}</span>
         </div>
         <div class={cn("input-container", billError != "" && "border-red-400")}>
-          <img src={iconDollar} alt="" role="presentation" class="h-6 w-6" />
+          <img src={iconDollar} alt="" role="presentation" />
           <input
             on:input={handleBillInput}
             value={bill}
@@ -203,7 +203,7 @@
           <span class="text-red-400">{peopleError}</span>
         </div>
         <div class="input-container">
-          <img src={iconPerson} alt="" role="presentation" class="h-6 w-6" />
+          <img src={iconPerson} alt="" role="presentation" />
           <input
             on:input={handlePeopleInput}
             id="number-of-people"
