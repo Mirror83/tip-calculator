@@ -8,7 +8,7 @@
 <button
   on:click
   class={cn(
-    "py-4 rounded-md hover:bg-light-cyan hover:text-very-dark-cyan",
+    "py-2 rounded-md hover:bg-light-cyan hover:text-very-dark-cyan",
     selected
       ? "bg-strong-cyan text-very-dark-cyan "
       : "bg-very-dark-cyan text-white"
