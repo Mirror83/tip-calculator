@@ -4,11 +4,14 @@ import App from "./App.svelte";
 
 describe("App", () => {
   it("renders App component correctly", () => {
+    // @ts-ignore
     render(App);
   });
 
   it("resets input fields and buttons when reset button is clicked", async () => {
+    // @ts-ignore
     render(App);
+
     const billInput: HTMLInputElement = screen.getByLabelText("Bill");
     const tipInput: HTMLInputElement = screen.getByTestId("percentage-input");
     const peopleInput: HTMLInputElement =

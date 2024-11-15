@@ -15,28 +15,15 @@
 
   const tipOptions = [0.05, 0.1, 0.15, 0.25, 0.5];
 
-  let selectedOption: number | null = null;
-  let customPercentage: number | null = null;
-  let customPercentageError = "";
+  let selectedOption: number | null = $state(null);
+  let customPercentage: number | null = $state(null);
+  let customPercentageError = $state("");
 
-  $: tipPercentage = customPercentage
-    ? getTipPercentage(selectedOption, customPercentage)
-    : 0;
+  let noOfPeople: number | null = $state(null);
+  let peopleError = $state("");
 
-  let noOfPeople: number | null = null;
-  let peopleError = "";
-
-  let bill: number | null = null;
-  let billError = "";
-
-  $: tipPerPerson =
-    bill && noOfPeople
-      ? calculateTipPerPerson(bill, tipPercentage, noOfPeople)
-      : 0;
-  $: totalPerPerson =
-    bill && noOfPeople
-      ? calculateTotalPerPerson(bill, tipPercentage, noOfPeople)
-      : 0;
+  let bill: number | null = $state(null);
+  let billError = $state("");
 
   function reset() {
     bill = null;
@@ -133,6 +120,19 @@
       }
     }
   }
+  let tipPercentage = $derived(
+    customPercentage ? getTipPercentage(selectedOption, customPercentage) : 0
+  );
+  let tipPerPerson = $derived(
+    bill && noOfPeople
+      ? calculateTipPerPerson(bill, tipPercentage, noOfPeople)
+      : 0
+  );
+  let totalPerPerson = $derived(
+    bill && noOfPeople
+      ? calculateTotalPerPerson(bill, tipPercentage, noOfPeople)
+      : 0
+  );
 </script>
 
 <main
@@ -156,7 +156,7 @@
         <div class={cn("input-container", billError != "" && "border-red-400")}>
           <img src={iconDollar} alt="" role="presentation" />
           <input
-            on:input={handleBillInput}
+            oninput={handleBillInput}
             value={bill}
             id="bill"
             type="text"
@@ -174,7 +174,7 @@
             <PercentageOption
               text={tipOption * 100 + "%"}
               selected={i == selectedOption}
-              on:click={() => {
+              onClick={() => {
                 selectedOption = i;
               }}
             />
@@ -189,8 +189,8 @@
             </div>
             <div class="input-container">
               <input
-                on:focus={() => (selectedOption = null)}
-                on:input={handleCustomPercentageInput}
+                onfocus={() => (selectedOption = null)}
+                oninput={handleCustomPercentageInput}
                 bind:value={customPercentage}
                 type="number"
                 min={0}
@@ -216,7 +216,7 @@
         <div class="input-container">
           <img src={iconPerson} alt="" role="presentation" />
           <input
-            on:input={handlePeopleInput}
+            oninput={handlePeopleInput}
             id="number-of-people"
             name="People"
             type="number"
@@ -240,7 +240,7 @@
       </div>
 
       <button
-        on:click={reset}
+        onclick={reset}
         disabled={bill === null ||
           noOfPeople === null ||
           selectedOption === null}

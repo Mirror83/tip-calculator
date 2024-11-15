@@ -6,9 +6,13 @@
   } from "../utils/calculate-tip";
   import ResultRow from "./ResultRow.svelte";
 
-  export let bill: number;
-  export let noOfPeople: number;
-  export let tipPercentage: number;
+  interface Props {
+    bill: number;
+    noOfPeople: number;
+    tipPercentage: number;
+  }
+
+  let { bill, noOfPeople, tipPercentage }: Props = $props();
 
   console.log(bill, tipPercentage, noOfPeople);
 

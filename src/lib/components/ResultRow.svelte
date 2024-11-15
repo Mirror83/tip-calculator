@@ -1,6 +1,10 @@
 <script lang="ts">
-  export let title;
-  export let cost;
+  interface Props {
+    title: any;
+    cost: any;
+  }
+
+  let { title, cost }: Props = $props();
 </script>
 
 <div class="flex flex-wrap gap-4 justify-between items-end mb-8">

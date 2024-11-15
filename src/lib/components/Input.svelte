@@ -1,10 +1,21 @@
 <script lang="ts">
-  export let value: number;
-  export let labelText: string;
-  export let placeholder: number;
-  export let iconPath: string;
-  export let min: number = 1;
-  export let max: number;
+  interface Props {
+    value: number;
+    labelText: string;
+    placeholder: number;
+    iconPath: string;
+    min?: number;
+    max: number;
+  }
+
+  let {
+    value = $bindable(),
+    labelText,
+    placeholder,
+    iconPath,
+    min = 1,
+    max
+  }: Props = $props();
 </script>
 
 <div class="flex flex-col gap-4">
