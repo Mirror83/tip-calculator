@@ -136,7 +136,7 @@
 </script>
 
 <main
-  class="bg-light-cyan lg:flex lg:flex-col lg:items-center lg:justify-center lg:min-h-screen lg:py-8 lg:gap-8"
+  class="bg-light-cyan lg:flex lg:flex-col lg:items-center lg:justify-center lg:min-h-screen lg:py-8 lg:gap-16"
 >
   <div
     class="flex justify-center items-center h-[150px] lg:h-auto bg-light-cyan"
@@ -231,10 +231,10 @@
     </div>
 
     <div
-      class="bg-very-dark-cyan p-4 py-8 rounded-xl
+      class="bg-very-dark-cyan p-4 py-8 rounded-2xl
        md:p-8 mt-8 md:mt-0 md:flex md:flex-col md:justify-between"
     >
-      <div>
+      <div class="mt-8">
         <ResultRow title={"Tip Amount"} cost={formatCost(tipPerPerson)} />
         <ResultRow title={"Total"} cost={formatCost(totalPerPerson)} />
       </div>
