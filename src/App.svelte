@@ -130,7 +130,7 @@
   }
 
   let tipPercentage = $derived(
-    customPercentage ? getTipPercentage(selectedOption, customPercentage) : 0
+    getTipPercentage(selectedOption, customPercentage)
   );
   let tipPerPerson = $derived(
     bill && noOfPeople
