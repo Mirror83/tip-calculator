@@ -192,6 +192,7 @@ class="text-red-400 text-xs text-center"
               <span class="text-red-400 text-xs text-center"
                 >{customPercentageError}</span>
               <input
+                data-testid="custom-tip-percentage"
                 onfocus={() => (selectedOption = null)}
                 oninput={handleCustomPercentageInput}
                 bind:value={customPercentage}
