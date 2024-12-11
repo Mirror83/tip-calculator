@@ -25,6 +25,14 @@
   let bill: number | null = $state(null);
   let billError = $state("");
 
+  function canReset() {
+    return (
+      bill == null ||
+      noOfPeople == null ||
+      (selectedOption == null && customPercentage == null)
+    );
+  }
+
   function reset() {
     bill = null;
     selectedOption = null;
@@ -245,9 +253,7 @@ class="text-red-400 text-xs text-center"
 
       <button
         onclick={reset}
-        disabled={bill === null ||
-          noOfPeople === null ||
-          selectedOption === null}
+        disabled={canReset()}
         class="w-full bg-strong-cyan hover:bg-light-cyan text-very-dark-cyan rounded-md py-2 text-xl disabled:bg-dark-cyan"
         >RESET</button
       >
