@@ -120,6 +120,7 @@
       }
     }
   }
+
   let tipPercentage = $derived(
     customPercentage ? getTipPercentage(selectedOption, customPercentage) : 0
   );
@@ -183,11 +184,14 @@
             <div class="flex flex-row-reverse justify-center mb-2">
               <label
                 for="custom-tip-percentage"
-                class="text-red-400 text-xs text-center"
+class="text-red-400 text-xs text-center"
                 >{customPercentageError}</label
               >
             </div>
             <div class="input-container">
+              <label for="custom-tip-percentage" class="sr-only"
+                >Custom percentage</label
+              >
               <input
                 onfocus={() => (selectedOption = null)}
                 oninput={handleCustomPercentageInput}
