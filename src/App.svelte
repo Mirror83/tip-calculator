@@ -189,9 +189,8 @@ class="text-red-400 text-xs text-center"
               >
             </div>
             <div class="input-container">
-              <label for="custom-tip-percentage" class="sr-only"
-                >Custom percentage</label
-              >
+              <span class="text-red-400 text-xs text-center"
+                >{customPercentageError}</span>
               <input
                 onfocus={() => (selectedOption = null)}
                 oninput={handleCustomPercentageInput}
