@@ -16,33 +16,33 @@
   const tipOptions = [0.05, 0.1, 0.15, 0.25, 0.5];
 
   let selectedOption: number | null = $state(null);
-  let customPercentage: number | null = $state(null);
+  let customPercentage: number | "" = $state("");
   let customPercentageError = $state("");
 
-  let noOfPeople: number | null = $state(null);
+  let noOfPeople: number | "" = $state("");
   let peopleError = $state("");
 
-  let bill: number | null = $state(null);
+  let bill: number | "" = $state("");
   let billError = $state("");
 
   function canReset() {
     return (
-      bill == null ||
-      noOfPeople == null ||
-      (selectedOption == null && customPercentage == null)
+      bill == "" ||
+      noOfPeople == "" ||
+      (selectedOption == null && customPercentage == "")
     );
   }
 
   function reset() {
-    bill = null;
+    bill = "";
     selectedOption = null;
-    customPercentage = null;
-    noOfPeople = null;
+    customPercentage = "";
+    noOfPeople = "";
   }
 
   function getTipPercentage(
     option: number | null,
-    percentage: number | null
+    percentage: number | ""
   ): number {
     if (option !== null) return tipOptions[option];
 
