@@ -248,8 +248,8 @@ class="text-red-400 text-xs text-center"
        md:p-8 mt-8 md:mt-0 md:flex md:flex-col md:justify-between"
     >
       <div class="mt-8">
-        <ResultRow title={"Tip Amount"} cost={formatCost(tipPerPerson)} />
-        <ResultRow title={"Total"} cost={formatCost(totalPerPerson)} />
+        <ResultRow title={"Tip Amount"} cost={formatCost(tipPerPerson)} testId={"tip-per-person"}/>
+        <ResultRow title={"Total"} cost={formatCost(totalPerPerson)} testId={"total-per-person"}/>
       </div>
 
       <button
