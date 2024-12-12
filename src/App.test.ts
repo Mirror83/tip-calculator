@@ -34,6 +34,8 @@ describe("App", () => {
     await userEvent.click(resetButton);
 
     expect(billInput).toHaveValue("");
+
+    // When an input of type "number" is cleared, it will have a value of null apparently
     expect(customTipPercentageInput).toHaveValue(null);
     expect(peopleInput).toHaveValue(null);
 
