@@ -7,7 +7,7 @@ describe("App", () => {
     // @ts-ignore
     render(App);
   });
-  it("resets input fields and buttons when reset button is clicked", async () => {
+  it("resets input fields when reset button is clicked", async () => {
     // @ts-ignore
     render(App);
 
