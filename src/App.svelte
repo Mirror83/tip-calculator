@@ -150,6 +150,7 @@
   <div
     class="flex justify-center items-center h-[150px] lg:h-auto bg-light-cyan"
   >
+    <h1 class="sr-only">Splitter</h1>
     <img src={splitterLogo} class="mb-8" alt="Splitter logo" />
   </div>
 
