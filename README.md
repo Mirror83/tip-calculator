@@ -32,6 +32,8 @@ Users should be able to:
 ### Links
 
 - Solution URL: [https://www.frontendmentor.io/solutions/tip-calculator-using-svelte-JCbx2hGM3-](https://www.frontendmentor.io/solutions/tip-calculator-using-svelte-JCbx2hGM3-)
+  
+  **Notice** This Frontend Mentor solution has been recently edited to point to a [different implementation done using React](https://https://github.com/Mirror83/tip-calculator-react).
 - Live Site URL: [https://tip-calculator-flax-three.vercel.app/](https://tip-calculator-flax-three.vercel.app/)
 
 ## My process
